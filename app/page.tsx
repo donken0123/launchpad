@@ -66,7 +66,7 @@ const txb= new Transaction();
 txb.publish */
 import WalletButton from '@/components/walletbutton';
 //import TokenForm from '@/components/TokenForm';
-import PublishModule from '@/components/PublishModule';
+import TokenForm from '@/components/TokenForm';
 
 export default function Home() {
   return (
@@ -103,7 +103,7 @@ export default function Home() {
 
         {/* 表單卡片 */}
         <div className="card p-8">
-          <PublishModule />
+          <TokenForm />
         </div>
 
         {/* 底部說明 */}

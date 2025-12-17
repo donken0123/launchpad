@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { useCurrentAccount, useSignAndExecuteTransaction } from "@iota/dapp-kit";
 import { Transaction } from "@iota/iota-sdk/transactions";
+import {getPublishData} from "@/lib/tokentemaple";
 
 interface FormState{
     name:string;
@@ -66,7 +67,7 @@ const [imageFile, setImageFile] = useState<File | null>(null);
     setError(null);
     setTxDigest(null);
 
-      try {
+      /* try {
       setStatus('building');
       await new Promise(resolve => setTimeout(resolve, 1000)); 
       
@@ -86,45 +87,47 @@ const [imageFile, setImageFile] = useState<File | null>(null);
       setStatus('error');
       setError('模擬發幣失敗');
     }
-    }, [account, form, validateForm]); 
-      /* try {
+    }, [account, form, validateForm]);  */
+       try {
       setStatus('building');
       
       // 準備代幣配置
-      const tokenConfig: TokenConfig = {
+      const publishData = await getPublishData({
         name: form.name.trim(),
         symbol: form.symbol.trim().toUpperCase(),
         description: form.description.trim(),
         iconUrl: form.iconUrl.trim(),
-         
-      };
-
-      const bytecode = await buildTokenBytecode(tokenConfig);
+      });
 
       setStatus('signing');
-      
+
       const tx = new Transaction();
-      
+
       const [upgradeCap] = tx.publish({
-        modules: [[...bytecode]],
-        dependencies: [
-          '0x1',
-          '0x2',
-        ],
+        modules: publishData.modules,
+        dependencies: publishData.dependencies,
       });
 
       tx.transferObjects([upgradeCap], account!.address);
       tx.setGasBudget(100000000);
 
       setStatus('deploying');
-      
+
       const result = await signAndExecute({
         transaction: tx,
       });
 
       setStatus('success');
       setTxDigest(result.digest);
-      
+
+      setForm({
+      name: '',
+      symbol: '',
+      description: '',
+      iconUrl: '',
+      websitelink: '',
+     });
+
       console.log('Token deployed successfully!', result);
 
     } catch (err) {
@@ -132,14 +135,14 @@ const [imageFile, setImageFile] = useState<File | null>(null);
       setError(err instanceof Error ? err.message : '部署失敗，請重試');
       console.error('Deploy error:', err);
     }
-  }, [account, form, validateForm, signAndExecute]); */
+  }, [account, form, validateForm, signAndExecute]);
 
    const getStatusText = () => {
     switch (status) {
       case 'building': return '正在構建字節碼...';
       case 'signing': return '請在錢包中確認...';
       case 'deploying': return '正在部署到區塊鏈...';
-      case 'success': return '🎉 代幣創建成功！';
+      case 'success': return '🎉 代幣創建成功！點選即可再次鑄造';
       case 'error': return '部署失敗';
       default: return '一鍵發幣';
     }
@@ -271,10 +274,7 @@ const [imageFile, setImageFile] = useState<File | null>(null);
       
 
       
-      <div className="fee-display">
-        <span className="text-slate-300">部署費用</span>
-        <span className="text-xl font-bold text-cyan-400">0.1 Iota</span>
-      </div>
+      
 
       {/* ========== 錯誤訊息 ========== */}
       {error && (

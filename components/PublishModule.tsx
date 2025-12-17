@@ -1,5 +1,5 @@
 // app/components/PublishModule.tsx
-'use client';
+/* 'use client';
 
 import { Transaction } from '@iota/iota-sdk/transactions';
 import { useSignAndExecuteTransaction, useCurrentAccount } from '@iota/dapp-kit';
@@ -104,4 +104,4 @@ export default function PublishModule() {
       )}
     </div>
   );
-}
+} */
