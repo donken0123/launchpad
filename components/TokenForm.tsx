@@ -237,7 +237,7 @@ const [imageFile, setImageFile] = useState<File | null>(null);
         </h3>
 
         <div>
-          
+          <label className="input-label required">描述內容</label>
           <textarea
             value={form.description}
             onChange={(e) => updateField('description', e.target.value)}
