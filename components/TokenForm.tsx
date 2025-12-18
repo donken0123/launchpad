@@ -97,6 +97,7 @@ const [imageFile, setImageFile] = useState<File | null>(null);
         symbol: form.symbol.trim().toUpperCase(),
         description: form.description.trim(),
         iconUrl: form.iconUrl.trim(),
+        websitelink: form.websitelink.trim(),
       });
 
       setStatus('signing');

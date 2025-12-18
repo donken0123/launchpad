@@ -26,12 +26,13 @@ export interface TokenParams {
   name: string;
   description: string;
   iconUrl: string;
+  websitelink?: string;
   // mintAmount?: bigint;  // 可選
 }
 
 export async function getPublishData(params: TokenParams) {
 
-  const { symbol, name, description, iconUrl } = params;
+  const { symbol, name, description, iconUrl,websitelink } = params;
   const template = await import('@mysten/move-bytecode-template');
   await template.default(); // 初始化 WASM
   const bytecode = base64ToUint8Array(templatebytecode);
@@ -64,10 +65,16 @@ export async function getPublishData(params: TokenParams) {
     bcs.string().serialize('Catcoin').toBytes(), // old value
     'Vector(U8)'                                  // type
   );
+  let fullDescription = description;
+  if (websitelink && websitelink.trim()) {
+    fullDescription = `${description} | Website: ${websitelink.trim()}`;
+  }
+
+
    updated = template.update_constants(
     updated,
     // 描述
-    bcs.string().serialize(description).toBytes(),      // new value
+    bcs.string().serialize(fullDescription).toBytes(),      // new value
     bcs.string().serialize('i like cat').toBytes(), // old value
     'Vector(U8)'                                  // type
   );
