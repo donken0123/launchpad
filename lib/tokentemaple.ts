@@ -38,8 +38,8 @@ export async function getPublishData(params: TokenParams) {
   let updated;
   //modulename
    updated =  template.update_identifiers(bytecode, {
-    "MYCOIN": name.toUpperCase(),
-    "mycoin": name.toLowerCase(),
+    "MYCOIN": "IOTAPUMP"+name.toUpperCase(),
+    "mycoin": "iotapump"+name.toLowerCase(),
   });
   
   /*  updated = template.update_constants(

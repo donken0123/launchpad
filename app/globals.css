@@ -47,7 +47,7 @@ body {
   --bg-input: #16213e;
   
   /* 文字色 */
-  --text-primary: #f1f5f9;
+  --text-primary: #f1f1f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   
@@ -389,3 +389,69 @@ body {
   color: var(--text-muted);
 }
 
+/* Header */
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(15, 15, 35, 0.9);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 導航連結 */
+.nav-link {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+}
+
+.token-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s;
+}
+
+.token-item:hover {
+  border-color: var(--border-focus);
+}
+
+.token-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.token-type {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.token-index {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  min-width: 2rem;
+}
